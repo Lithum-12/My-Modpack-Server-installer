@@ -1,4 +1,6 @@
 @echo off
+setlocal enabledelayedexpansion
+cd /d "%~dp0"
 for /f %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set "GREEN=%ESC%[92m"
 set "YELLOW=%ESC%[93m"
@@ -10,7 +12,7 @@ echo.
 echo %BLUE%======================================%RESET%
 echo %BLUE%  Modpack Server Setup Script%RESET%
 echo %BLUE%  Made by LithumC ^| MIT License%RESET%
-echo %BLUE%  Version 2.8 ^| 2026-05-17%RESET%
+echo %BLUE%  Version 2.11 ^| 2026-05-17%RESET%
 echo %BLUE%  Supported: HAD 19.3.142-Canary%RESET%
 echo %BLUE%======================================%RESET%
 echo.
@@ -74,16 +76,20 @@ echo %YELLOW%Deploying modpack...%RESET%
 if exist "Hope and despair 19.3.142-Canary.mrpack" (
     echo Modpack file already exists, deploying from local file.
     mrpack-install-windows.exe "Hope and despair 19.3.142-Canary.mrpack" --server-dir . --server-file libraries\net\minecraftforge\forge\1.20.1-47.4.13\forge-1.20.1-47.4.13-universal.jar > mrpack-deploy.log 2>&1
+    set MRPACK_ERR=!ERRORLEVEL!
     type mrpack-deploy.log
+    if !MRPACK_ERR! neq 0 goto mrpack_failed
 ) else (
     mrpack-install-windows.exe UeU522Qh 19.3.142-Canary --server-dir . --server-file libraries\net\minecraftforge\forge\1.20.1-47.4.13\forge-1.20.1-47.4.13-universal.jar > mrpack-deploy.log 2>&1
+    set MRPACK_ERR=!ERRORLEVEL!
     type mrpack-deploy.log
+    if !MRPACK_ERR! neq 0 goto mrpack_failed
     if not exist "Hope and despair 19.3.142-Canary.mrpack" goto mrpack_failed
 )
 goto mrpack_check
 :mrpack_failed
-echo %RED%Failed: Modpack file download failed. Check your network connection.%RESET%
-del mrpack-deploy.log
+echo %RED%Failed: Modpack deployment failed. Check your network connection.%RESET%
+if exist mrpack-deploy.log del mrpack-deploy.log
 pause & exit /b 1
 :mrpack_check
 findstr /i "Download failed" mrpack-deploy.log >nul
