@@ -9,12 +9,12 @@ set "RED=%ESC%[91m"
 set "RESET=%ESC%[0m"
 
 echo.
-echo %BLUE%+-------------------------------+%RESET%
+echo %BLUE%+---------------------------------+%RESET%
 echo %BLUE%^|  Hope and Despair             ^|%RESET%
 echo %BLUE%^|  Server Setup Script v3.6     ^|%RESET%
-echo %BLUE%^|  Made by LithumC             ^|%RESET%
-echo %BLUE%^|  MIT License                  ^|%RESET%
-echo %BLUE%+-------------------------------+%RESET%
+echo %BLUE%^|  Made by LithumC              ^|%RESET%
+echo %BLUE%^|  CC BY-NC 4.0 License         ^|%RESET%
+echo %BLUE%+---------------------------------+%RESET%
 echo.
 echo Current modpack version: %YELLOW%HAD 19.4.159%RESET%
 echo.
